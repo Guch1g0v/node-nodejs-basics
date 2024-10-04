@@ -1,5 +1,3 @@
-const create = async () => {
-    // Write your code here 
-};
+const create = async () => {};
 
 await create();
