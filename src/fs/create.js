@@ -1,12 +1,11 @@
 import { open } from 'fs/promises';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import CONSTANTS from './constants.js';
+import { getDirname, throwError } from './utils.js';
 
-const { FILES_DIRNAME, NEW_FILE_NAME, FILE_CONTENT, ERROR_MESSAGE } = CONSTANTS;
+const { FILES_DIRNAME, NEW_FILE_NAME, FILE_CONTENT } = CONSTANTS;
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = getDirname(import.meta.url);
 
 const create = async () => {
   try {
@@ -14,10 +13,7 @@ const create = async () => {
     const file = await open(filePath, 'wx');
     await file.writeFile(FILE_CONTENT);
   } catch (error) {
-    if (error.code === 'EEXIST') {
-      throw new Error(ERROR_MESSAGE);
-    }
-    throw error;
+    throwError(error);
   }
 };
 
