@@ -1,7 +1,7 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import CONSTANTS from './constants.js';
-import { access, constants } from 'fs/promises';
+import { access } from 'fs/promises';
 
 export const getDirname = (metaPathUrl) => {
   const __filename = fileURLToPath(metaPathUrl);
@@ -20,7 +20,7 @@ export const throwError = (error) => {
 
 export const checkFileExists = async (filePath) => {
   try {
-    await access(filePath, constants.F_OK);
+    await access(filePath);
     return true;
   } catch (error) {
     if (error.code === 'ENOENT') {
@@ -31,5 +31,6 @@ export const checkFileExists = async (filePath) => {
 };
 
 export const getFilePath = (...args) => {
-  return path.resolve(...args);
+  const __dirname = getDirname(import.meta.url);
+  return path.resolve(__dirname, ...args);
 };

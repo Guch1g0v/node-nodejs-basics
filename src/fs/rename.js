@@ -1,12 +1,11 @@
 import { rename as fsRename } from 'fs/promises';
-import { checkFileExists, getDirname, getFilePath, throwError } from './utils.js';
+import { checkFileExists, getFilePath, throwError } from './utils.js';
 import CONSTANTS from './constants.js';
-
-const __dirname = getDirname(import.meta.url);
+const { FILES_DIRNAME } = CONSTANTS;
 
 const rename = async () => {
-  const oldPath = getFilePath(__dirname, CONSTANTS.FILES_DIRNAME, 'wrongFilename.txt');
-  const newPath = getFilePath(__dirname, CONSTANTS.FILES_DIRNAME, 'properFilename.md');
+  const oldPath = getFilePath(FILES_DIRNAME, 'wrongFilename.txt');
+  const newPath = getFilePath(FILES_DIRNAME, 'properFilename.md');
   const isOldFileExists = await checkFileExists(oldPath);
   const isNewFileExists = await checkFileExists(newPath);
   if (!isOldFileExists || isNewFileExists) {
